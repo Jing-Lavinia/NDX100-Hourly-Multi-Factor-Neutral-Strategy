@@ -1,4 +1,4 @@
-# V17 Market-Neutral Quantitative Trading Engine
+# Market-Neutral Quantitative Trading Engine
 
 A production-grade, hourly-resolution quantitative trading system targeting the **Nasdaq 100 technology equity universe**. The engine implements a cross-sectional factor pipeline with dynamic risk management, institutional-grade execution simulation, and a comprehensive analytics suite.
 
