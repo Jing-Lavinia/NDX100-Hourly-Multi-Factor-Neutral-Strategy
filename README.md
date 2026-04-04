@@ -12,8 +12,8 @@ All metrics are computed on a strictly out-of-sample backtest window (January–
 |---|---|---|
 | **Geometric CAGR** | 136.77% | Annualized compound return |
 | **Sharpe Ratio** | 3.96 | Risk-adjusted return |
-| **Sortino Ratio** | — | Downside-only volatility adjusted |
-| **Calmar Ratio** | — | CAGR / Max Drawdown |
+| **Sortino Ratio** | 4.85 | Downside-only volatility adjusted |
+| **Calmar Ratio** | 9.05 | CAGR / Max Drawdown |
 | **Max Drawdown** | −15.11% | Peak-to-trough under dynamic risk control |
 | **Win Rate (Per Bar)** | 53.15% | Probability of positive return per 1H bar |
 | **Portfolio Beta** | −0.142 | Near-zero market correlation |
