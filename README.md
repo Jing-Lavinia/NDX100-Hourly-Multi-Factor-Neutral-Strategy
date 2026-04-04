@@ -94,7 +94,7 @@ Standard quantile return bars, cumulative returns by quantile (1D / 6D / 12D hor
 │   └── visualization.py            # Full analytics and charting suite
 ├── data/
 │   ├── fetch_data.py               # VIX macro data ingestion (yfinance)
-│   └── longtime_period_data.py     # High-frequency K-line ingestion (Alpaca API)
+│   └── longtime_period_data.py     # Intraday K-line ingestion (Alpaca API)
 └── reports/
     ├── plots/
     │   ├── 01_returns/
