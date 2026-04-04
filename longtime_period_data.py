@@ -1,21 +1,20 @@
 import os
 import time
 from datetime import datetime, timedelta
+
 from alpaca.data.historical import StockHistoricalDataClient
 from alpaca.data.requests import StockBarsRequest
 from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
 
-# Initialize Alpaca client
-API_KEY = 'PKHHXR4WCUXWCPXEFUD72BG5V2'
-SECRET_KEY = '8CyLefa7PCZCc3cBqbdfsunGpcuQV3w4jwZNfzX8SSnQ'
+API_KEY = "PKHHXR4WCUXWCPXEFUD72BG5V2"
+SECRET_KEY = "8CyLefa7PCZCc3cBqbdfsunGpcuQV3w4jwZNfzX8SSnQ"
+
 client = StockHistoricalDataClient(API_KEY, SECRET_KEY)
 
-# Ensure target directory exists
-SAVE_DIR = "ndx100_5min_csv"
+SAVE_DIR = "data/raw/ndx100_5min_csv"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
-# Nasdaq 100 component universe
-tickers = [
+TICKERS = [
     "AAPL", "ABNB", "ADBE", "ADI", "ADP", "ADSK", "AEP", "ALNY", "AMAT", "AMD",
     "AMGN", "AMZN", "APP", "ARM", "ASML", "AVGO", "AXON", "BKNG", "BKR", "CCEP",
     "CDNS", "CEG", "CHTR", "CMCSA", "COST", "CPRT", "CRWD", "CSCO", "CSGP", "CSX",
@@ -25,57 +24,58 @@ tickers = [
     "META", "MNST", "MPWR", "MRVL", "MSFT", "MSTR", "MU", "NFLX", "NVDA", "NXPI",
     "ODFL", "ORLY", "PANW", "PAYX", "PCAR", "PDD", "PEP", "PLTR", "PYPL", "QCOM",
     "REGN", "ROP", "ROST", "SBUX", "SHOP", "SNPS", "STX", "TEAM", "TMUS", "TSLA",
-    "TTWO", "TXN", "VRSK", "VRTX", "WBD", "WDC", "WDAY", "WMT", "XEL", "ZS"
+    "TTWO", "TXN", "VRSK", "VRTX", "WBD", "WDC", "WDAY", "WMT", "XEL", "ZS",
 ]
 
-# Set timeframe: 5 years of 5-minute resolution data
-end_date = datetime(2026, 3, 28)
-start_date = end_date - timedelta(days=5 * 365)
-timeframe = TimeFrame(amount=5, unit=TimeFrameUnit.Minute)
+END_DATE = datetime(2026, 3, 28)
+START_DATE = END_DATE - timedelta(days=1 * 365)
+TIMEFRAME = TimeFrame(amount=5, unit=TimeFrameUnit.Minute)
 
-print(f"Starting download for {len(tickers)} tickers...")
-print(f"Timeframe: {start_date.date()} to {end_date.date()}\n" + "-" * 50)
 
-for ticker in tickers:
+def download_ticker(ticker: str) -> None:
     file_path = f"{SAVE_DIR}/{ticker}_5min.csv"
 
-    # Resume capability: skip if already downloaded
     if os.path.exists(file_path):
-        print(f"[{ticker}] CSV exists, skipping...")
-        continue
+        print(f"[{ticker}] Already downloaded, skipping.")
+        return
 
-    print(f"Downloading [{ticker}]...")
-    request_params = StockBarsRequest(
+    print(f"[{ticker}] Downloading...")
+    request = StockBarsRequest(
         symbol_or_symbols=ticker,
-        timeframe=timeframe,
-        start=start_date,
-        end=end_date
+        timeframe=TIMEFRAME,
+        start=START_DATE,
+        end=END_DATE,
     )
 
     try:
-        # Fetch data (Alpaca SDK handles background pagination automatically)
-        bars = client.get_stock_bars(request_params)
-
+        bars = client.get_stock_bars(request)
         if bars.df.empty:
-            print(f"[{ticker}] No historical data found.")
-            continue
+            print(f"[{ticker}] No data returned.")
+            return
 
-        bars_df = bars.df
-
-        # Convert standard UTC to US Eastern Time (New York)
-        bars_df.index = bars_df.index.set_levels(
-            bars_df.index.levels[1].tz_convert('America/New_York'),
-            level=1
+        df = bars.df
+        df.index = df.index.set_levels(
+            df.index.levels[1].tz_convert("America/New_York"),
+            level=1,
         )
+        df.to_csv(file_path)
+        print(f"[{ticker}] Done | rows={len(df)} → {file_path}")
 
-        bars_df.to_csv(file_path)
-        print(f"[{ticker}] Download complete! Rows: {len(bars_df)} -> {file_path}")
+    except Exception as exc:
+        print(f"[{ticker}] Error: {exc}")
 
-    except Exception as e:
-        print(f"[{ticker}] Error during download: {e}")
 
-    # Rate limit handling for Alpaca free tier
-    time.sleep(1)
+def main() -> None:
+    print(f"Downloading {len(TICKERS)} tickers | {START_DATE.date()} → {END_DATE.date()}")
+    print("-" * 60)
 
-print("-" * 50)
-print("Data pipeline execution finished.")
+    for ticker in TICKERS:
+        download_ticker(ticker)
+        time.sleep(1)
+
+    print("-" * 60)
+    print("Download pipeline complete.")
+
+
+if __name__ == "__main__":
+    main()
