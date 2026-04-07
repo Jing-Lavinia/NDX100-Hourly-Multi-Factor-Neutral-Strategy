@@ -61,7 +61,7 @@ not calendar days. The "D" suffix is a labelling artefact of the library.*
 
 ### 1. The factor signal is real but noisy at the bar level
 
-The Alphalens IC summary ![](`./reports/plots/02_ic/01_ic_timeseries.png`) shows mean ICs of 0.033,
+The Alphalens IC summary ![](./reports/plots/02_ic/01_ic_timeseries.png) shows mean ICs of 0.033,
 0.052, and 0.064 across the 1H, 6H, and 12H horizons. These figures are consistent with
 a genuine predictive signal — academic literature treats IC ≥ 0.02 as economically
 meaningful for high-frequency cross-sectional strategies.
