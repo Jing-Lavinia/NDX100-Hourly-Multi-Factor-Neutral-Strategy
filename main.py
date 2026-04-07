@@ -6,7 +6,7 @@ from src.alpaca_engine import load_and_clean_alpaca_data
 
 
 def main() -> None:
-    logger.info("=== Quantitative Intraday Factor Pipeline (V17 Long-Short) ===")
+    logger.info("=== Quantitative Intraday Factor Pipeline (Long-Short) ===")
 
     # --- Data Loading ---
     logger.info(f"Loading data from {config.DATA_START_DATE} (includes warm-up window)...")
@@ -18,10 +18,9 @@ def main() -> None:
     )
 
     # --- Universe Filtering ---
-    tech_tickers = [t for t, s in config.SECTOR_MAP.items() if s == "Tech"]
-    prices_1h = prices_1h.reindex(columns=tech_tickers).dropna(axis=1, how="all")
+    prices_1h = prices_1h.dropna(axis=1, how="all")
     volumes_1h = volumes_1h.reindex(columns=prices_1h.columns).loc[prices_1h.index]
-    logger.info(f"Tech universe filtered | tradable stocks={prices_1h.shape[1]}")
+    logger.info(f"Full universe loaded | tradable stocks={prices_1h.shape[1]}")
 
     # --- VIX Macro Data ---
     vix_data = None
@@ -33,7 +32,7 @@ def main() -> None:
         vix_data = vix_series.reindex(prices_1h.index, method="ffill")
         logger.info("VIX macro data loaded and aligned.")
     else:
-        logger.warning(f"VIX file not found at {config.VIX_DATA_FILE} — running without macro scaling.")
+        logger.warning(f"VIX file not found at {config.VIX_DATA_FILE} - running without macro scaling.")
 
     # --- Factor Generation ---
     logger.info("Generating multi-period factor pool...")

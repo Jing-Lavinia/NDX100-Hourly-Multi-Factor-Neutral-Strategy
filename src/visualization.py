@@ -95,7 +95,7 @@ def generate_all_reports(clean_factor_data: pd.DataFrame) -> None:
     for period in config.FORWARD_PERIODS:
         al.plotting.plot_cumulative_returns_by_quantile(mean_ret_quant_daily, period=f"{period}D")
         plt.gcf().savefig(
-            plots_dir / "01_returns" / f"02_cumulative_returns_{period}D.png",
+            plots_dir / "01_returns" / f"02_cumulative_returns_{period}H.png",
             bbox_inches="tight", dpi=150,
         )
         plt.close("all")
@@ -164,7 +164,7 @@ def render_equity_curve(
     ax_eq, ax_dd = axes
     eq = results["Equity Curve"]
 
-    ax_eq.plot(eq.index, eq.values, color=ACCENT, lw=LINE_WIDTH, label="Strategy (V17 L/S)")
+    ax_eq.plot(eq.index, eq.values, color=ACCENT, lw=LINE_WIDTH, label="Strategy (L/S)")
     if benchmark_curve is not None:
         ax_eq.plot(
             benchmark_curve.index, benchmark_curve.values,
@@ -227,7 +227,7 @@ def render_performance_dashboard(results: pd.DataFrame, output_dir: Path) -> Non
     _apply_style()
 
     fig = plt.figure(figsize=(18, 14))
-    fig.suptitle("Strategy Performance Dashboard  |  V17 Market-Neutral L/S", fontsize=13, y=0.98)
+    fig.suptitle("Strategy Performance Dashboard  |  Market-Neutral L/S", fontsize=13, y=0.98)
     gs = gridspec.GridSpec(3, 3, figure=fig, hspace=0.45, wspace=0.35)
 
     net_ret = results["Net Return"]
@@ -410,7 +410,7 @@ def render_risk_decomposition(
     _apply_style()
 
     fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-    fig.suptitle("Risk Decomposition  |  V17 Market-Neutral L/S", fontsize=12, y=0.99)
+    fig.suptitle("Risk Decomposition  |  Market-Neutral L/S", fontsize=12, y=0.99)
 
     ax_exp, ax_net, ax_hhi, ax_wr = axes.flatten()
 
@@ -489,7 +489,7 @@ def render_factor_diagnostics(
     _apply_style()
 
     fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-    fig.suptitle("Factor Signal Diagnostics  |  V17 Composite Factor", fontsize=12, y=0.99)
+    fig.suptitle("Factor Signal Diagnostics  |  Composite Factor", fontsize=12, y=0.99)
 
     ax_disp, ax_decile, ax_scatter, ax_spread = axes.flatten()
 
@@ -571,7 +571,7 @@ def render_drawdown_analysis(results: pd.DataFrame, output_dir: Path) -> None:
     _apply_style()
 
     fig, axes = plt.subplots(2, 2, figsize=(16, 10))
-    fig.suptitle("Drawdown & Tail Risk Analysis  |  V17 Market-Neutral L/S", fontsize=12, y=0.99)
+    fig.suptitle("Drawdown & Tail Risk Analysis  |  Market-Neutral L/S", fontsize=12, y=0.99)
 
     ax_uw, ax_dur, ax_up_down, ax_qq = axes.flatten()
 

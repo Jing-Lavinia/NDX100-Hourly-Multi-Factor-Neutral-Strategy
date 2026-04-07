@@ -12,7 +12,7 @@ def _compute_forward_returns(prices: pd.DataFrame, periods: list[int]) -> pd.Dat
         periods: List of bar-count horizons.
 
     Returns:
-        Long-format DataFrame with columns named '{n}D'.
+        Long-format DataFrame with columns named '{n}H'.
     """
     stacked = []
     for period in periods:
