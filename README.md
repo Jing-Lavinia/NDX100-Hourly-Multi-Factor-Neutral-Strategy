@@ -98,7 +98,7 @@ implementation), the strategy retains a 4.6× safety buffer. This is a strong si
 the gross alpha is not being manufactured by ignoring trading friction.
 
 Average turnover per bar is 3.11%, meaning the cumulative cost drag over the 3-month
-period is approximately 0.5% ![](./reports/performance_dashboard.png). The gap between the gross and net equity curves is negligible — costs are not
+period is approximately 0.5% ![](./reports/plots/performance_dashboard.png). The gap between the gross and net equity curves is negligible — costs are not
 consuming the alpha.
 
 ### 4. Sector-level factor monotonicity is mixed
