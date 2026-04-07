@@ -78,7 +78,7 @@ mean persists across the 3-month OOS window, providing statistical confidence.
 
 ### 2. The strategy genuinely separates from the benchmark
 
-The equity curve (`plots/equity_curve_with_benchmark.png`) shows the strategy ending
+The equity curve ![](plots/equity_curve_with_benchmark.png) shows the strategy ending
 at +23.9% while QQQ (the benchmark) lost roughly −9% over the same January–March 2026
 window. The long-short structure insulates the portfolio from the broad market decline:
 the Alphalens beta estimate ranges from −0.28 to −0.54 across horizons, confirming
@@ -104,7 +104,7 @@ consuming the alpha.
 
 ### 4. Sector-level factor monotonicity is mixed
 
-The quantile returns chart (`plots/01_returns/01_quantile_returns_bar.png`) breaks down
+The quantile returns chart ![](plots/01_returns/01_quantile_returns_bar.png) breaks down
 factor performance by sector. **Energy and Consumer sectors** show the clearest
 monotonic separation between Q1 (worst) and Q5 (best) — the factor ranks stocks
 correctly within these sectors. **Tech and Healthcare** show weaker or non-monotonic
@@ -118,10 +118,10 @@ diversifying across these sector-level alpha sources.
 
 ### 5. The maximum drawdown arrives in March 2026 and coincides with high volatility
 
-The performance dashboard shows the rolling annualised volatility (`plots/performance_dashboard.png`)
+The performance dashboard shows the rolling annualised volatility ![](plots/performance_dashboard.png)
 exceeding the 15% vol-target threshold at multiple points in February–March 2026. During
 the March drawdown (−17.5% maximum), the rolling Sharpe drops sharply negative. The
-risk decomposition panel (`plots/risk_decomposition.png`) shows net exposure spiking
+risk decomposition panel ![](plots/risk_decomposition.png) shows net exposure spiking
 toward +0.4 in late February before being corrected by VIX delevering, suggesting the
 stop-loss and VIX mechanisms were active but could not fully prevent the drawdown.
 
@@ -143,7 +143,7 @@ main.py                   ← Pipeline entry point
     ├── alpaca_engine.py  ← CSV loader → 1H price/volume matrices
     ├── features.py       ← 3 alpha factors + composite synthesis
     ├── backtest.py       ← Alphalens factor evaluation
-    ├── realistic_backtest.py  ← 6-step L/S backtest engine (V17)
+    ├── realistic_backtest.py  ← 6-step L/S backtest engine 
     ├── visualization.py  ← Full chart suite
     └── utils.py          ← Logger
 ```
