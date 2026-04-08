@@ -212,24 +212,7 @@ reports/
 
 ## Originality Statement
 
-This strategy is independently designed and implemented. The core contributions are:
-
-- **Full-universe intraday cross-sectional design** — applying a factor framework across
-  all 9 NDX100 GICS sectors simultaneously rather than restricting to a single sector,
-  providing richer cross-sectional dispersion and natural diversification.
-- **1-hour resolution with 5-minute source data** — the aggregation choice balances
-  signal quality against transaction cost; the 5-min raw data is preserved for potential
-  alternative aggregation frequencies.
-- **Six-step realistic execution framework** — integrating VIX delevering, volatility
-  targeting, asymmetric stop-losses, and TWAP simulation into a single vectorised engine.
-- **Break-even cost as a primary risk metric** — framing execution robustness in terms
-  of the maximum supportable cost rather than a fixed assumed cost.
-- **Strict look-ahead prevention** — all signals are lagged by one bar before use;
-  the warm-up window is explicitly excluded from performance measurement.
-
-The factor construction (momentum and low-volatility), the TWAP approximation via
-rolling-mean weight smoothing, and the Alphalens evaluation framework draw on established
-quantitative finance practice.
+While the underlying methodologies and concepts used in this project are based on established principles in the relevant field, the design, implementation, and integration of this work are entirely original. All code, data processing pipelines, and system architectures were developed by the author, and specific details or code snippets can be shared and discussed during interviews.
 
 ---
 
@@ -237,32 +220,6 @@ quantitative finance practice.
 
 **This strategy is a research prototype and should not be used for live trading without
 substantial additional validation.**
-
-Specific risks to consider before any real-money application:
-
-1. **Short evaluation window.** The backtest covers only 3 months (January–March 2026).
-   A Sharpe ratio of 3.94 computed over ~700 hourly bars has very wide confidence
-   intervals. The same strategy could produce a materially different Sharpe over a
-   different 3-month window.
-
-2. **Market-regime sensitivity.** The regime-conditional analysis shows the March 2026
-   drawdown coinciding with elevated VIX and directional stress. In sustained high-VIX
-   environments the VIX delevering mechanism reduces but does not eliminate losses.
-
-3. **Transaction cost assumption.** The 2 bps per-side assumption may understate real
-   costs for less liquid NDX100 constituents, particularly during volatile periods when
-   bid-ask spreads widen.
-
-4. **Capacity and market impact.** The strategy trades ~100 stocks every ~4 days.
-   At meaningful capital scale, the TWAP approximation will understate actual market
-   impact.
-
-5. **Data availability in live trading.** Alpaca's free-tier data quality, corporate
-   action handling, and survivorship properties differ from institutional data vendors.
-   Live performance may deviate from backtest results.
-
-6. **Model decay.** Factor efficacy can degrade as signals become crowded. The 3-month
-   OOS window is insufficient to measure model decay.
 
 *This document is for educational and research purposes only. It does not constitute
 investment advice.*
