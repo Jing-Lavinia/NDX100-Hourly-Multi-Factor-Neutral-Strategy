@@ -149,18 +149,6 @@ main.py                   ← Pipeline entry point
 
 ---
 
-## Factor Specification
-
-| Factor | Window | Construction | Composite Weight |
-|--------|--------|-------------|-----------------|
-| Momentum_420 | 420 bars (~3 months) | `pct_change(420)` → MAD winsorise → z-score → EWMA(10) | **2×** |
-| Momentum_140 | 140 bars (~1 month) | same pipeline | 1× |
-| LowVol_90 | 90 bars (~2 weeks) | `−std(returns, 90)` → MAD winsorise → z-score → EWMA(20) | 1× |
-
-Composite = weighted sum → cross-sectional re-standardisation → N(0,1).
-
----
-
 ## Six-Step Execution Model
 
 | Step | Mechanism | Parameter |
@@ -172,19 +160,6 @@ Composite = weighted sum → cross-sectional re-standardisation → N(0,1).
 | 5 | TWAP simulation — 28-bar rolling-mean weight smoothing | 28 bars |
 | 6 | Micro-structural cost model | 2 bps per-side per unit turnover |
 
----
-
-## Configuration (`src/config.py`)
-
-| Parameter | Value | Meaning |
-|-----------|-------|---------|
-| `DATA_START_DATE` | 2025-08-01 | Warm-up start (factor convergence) |
-| `BACKTEST_START_DATE` | 2026-01-01 | OOS evaluation start |
-| `END_DATE` | 2026-03-31 | Data end |
-| `FORWARD_PERIODS` | [1, 6, 12] | Alphalens IC horizons (bar counts, not days) |
-| `holding_periods` | 28 | TWAP window and stop-loss lookback (bars) |
-| `base_transaction_cost` | 0.0002 | 2 bps per side |
-| `stop_loss_pct` | 0.08 | 8% asymmetric stop-loss |
 
 ---
 
